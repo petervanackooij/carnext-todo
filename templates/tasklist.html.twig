@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% for message in app.session.flashBag.get('success') %}
+    <p>{{ message }}</p>
+    {% endfor %}
+
+    <h1>Tasks</h1>
+
+    {% if tasks|length == 0 %}
+        Well done! Your task list is empty :-)<br>
+        <br>
+        <a href="{{ path('app.tasks.create') }}">Create your first task here</a>
+    {% else %}
+        <p><a href="{{ path('app.tasks.create') }}">Create a task</a></p>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Task</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for task in tasks %}
+                <tr>
+                    <td>{{ task.description }}</td>
+                    <td><a href="{{ path('app.tasks.complete', {'task': task.id}) }}">Mark as completed</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}
